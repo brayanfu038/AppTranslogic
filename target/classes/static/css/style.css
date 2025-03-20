@@ -1,0 +1,94 @@
+/* Variables de colores - Puedes ajustar estos valores según la paleta deseada */
+:root {
+    --color-primary: #3498db;       /* Azul principal */
+    --color-secondary: #2ecc71;     /* Verde secundario */
+    --color-dark: #2c3e50;          /* Oscuro para navbar */
+    --color-warning: #f39c12;       /* Naranja para botones de advertencia */
+    --color-info: #9b59b6;          /* Púrpura para badges de info */
+    --color-light: #ecf0f1;         /* Gris claro para fondos */
+    --color-white: #ffffff;         /* Blanco */
+    --color-hover: #2980b9;         /* Color hover para botones principales */
+}
+
+/* Estilos para las tarjetas destacadas */
+.my-style-destacados .card {
+    height: 100%;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.my-style-destacados .card:hover {
+    transform: translateY(-5px);
+}
+
+.my-style-destacados .card img {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+/* Sobrescribir estilos de Bootstrap */
+.navbar-dark.bg-dark {
+    background-color: var(--color-dark) !important;
+}
+
+.btn-primary {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-hover) !important;
+    border-color: var(--color-hover) !important;
+}
+
+.btn-outline-success {
+    color: var(--color-secondary) !important;
+    border-color: var(--color-secondary) !important;
+}
+
+.btn-outline-success:hover {
+    background-color: var(--color-secondary) !important;
+    color: var(--color-white) !important;
+}
+
+.btn-warning {
+    background-color: var(--color-warning) !important;
+    border-color: var(--color-warning) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--color-info) !important;
+    color: var(--color-white) !important;
+}
+
+.badge.bg-secondary {
+    background-color: var(--color-dark) !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--color-primary) !important;
+    border-color: var(--color-primary) var(--color-primary) var(--color-white) !important;
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+    color: var(--color-hover) !important;
+}
+
+/* Estilos adicionales para mejorar la apariencia */
+.card-title {
+    color: var(--color-dark);
+    font-weight: 600;
+}
+
+.container {
+    background-color: var(--color-light);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Animación para los botones */
+.btn {
+    transition: all 0.3s ease;
+}
