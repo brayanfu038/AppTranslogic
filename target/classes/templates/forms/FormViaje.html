@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulario de Viaje</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div th:replace="fragments/navbar :: nav"></div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 th:text="${viaje.id != null} ? 'Editar Viaje' : 'Crear Nuevo Viaje'" class="mb-4"></h2>
+                
+                <form th:action="@{(${viaje.id} != null) ? '/viajes/editar/' + ${viaje.id} : '/viajes/crear'}" method="post">
+                    <input type="hidden" name="id" th:value="${viaje.id}">
+
+                    <!-- Campo: Origen -->
+                    <div class="mb-3">
+                        <label for="origin" class="form-label">Origen</label>
+                        <input type="text" class="form-control" id="origin" name="origin" th:value="${viaje.origin}" required>
+                    </div>
+
+                    <!-- Campo: Destino -->
+                    <div class="mb-3">
+                        <label for="destination" class="form-label">Destino</label>
+                        <input type="text" class="form-control" id="destination" name="destination" th:value="${viaje.destination}" required>
+                    </div>
+
+                    <!-- Campo: Fecha y Hora de Salida -->
+                    <div class="mb-3">
+                        <label for="departureTime" class="form-label">Fecha y Hora de Salida</label>
+                        <input type="datetime-local" class="form-control" id="departureTime" name="departureTime" 
+                               th:value="${viaje.departureTime != null ? #temporals.format(viaje.departureTime, 'yyyy-MM-dd''T''HH:mm') : ''}" 
+                               required>
+                    </div>
+
+                    <!-- Campo: Estado -->
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Estado</label>
+                        <select class="form-control" id="status" name="status" required>
+                            <option value="SCHEDULED" th:selected="${viaje.status == 'SCHEDULED'}">Programado</option>
+                            <option value="IN_PROGRESS" th:selected="${viaje.status == 'IN_PROGRESS'}">En Progreso</option>
+                            <option value="COMPLETED" th:selected="${viaje.status == 'COMPLETED'}">Completado</option>
+                            <option value="CANCELLED" th:selected="${viaje.status == 'CANCELLED'}">Cancelado</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo: Vehículo -->
+                    <div class="mb-3">
+                        <label for="vehicle" class="form-label">Vehículo</label>
+                        <select class="form-control" id="vehicle" name="vehicle" required>
+                            <option th:each="vehiculo : ${vehiculos}" 
+                                    th:value="${vehiculo.id}" 
+                                    th:text="${vehiculo.model + ' - ' + vehiculo.plate}"
+                                    th:selected="${viaje.vehicle != null && viaje.vehicle.id == vehiculo.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Campo: Conductor -->
+                    <div class="mb-3">
+                        <label for="driver" class="form-label">Conductor</label>
+                        <select class="form-control" id="driver" name="driver" required>
+                            <option th:each="conductor : ${conductores}" 
+                                    th:value="${conductor.id}" 
+                                    th:text="${conductor.name + ' ' + (conductor.lastName != null ? conductor.lastName : '')}"
+                                    th:selected="${viaje.driver != null && viaje.driver.id == conductor.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a th:href="@{/viajes}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
