@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>Flotas - Sistema de Gestión de Flotas</title>
+</head>
+<body class="bg-light">
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: nav"></div>
+
+    <div class="container mt-4">
+        <!-- Botón para agregar nueva flota -->
+        <div class="row">
+            <div class="col col-md-12 text-end mb-4">
+                <a th:href="@{/flotas/crear}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Agregar Nueva Flota
+                </a>
+            </div>
+        </div>
+
+        <!-- Tabla de flotas -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre de la Flota</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="flota : ${flotas}">
+                                <td th:text="${flota.id}"></td>
+                                <td th:text="${flota.name}"></td>
+                                <td>
+                                    <div class="btn-group gap-2">
+                                        <a th:href="@{/flotas/editar/{id}(id=${flota.id})}" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i> Editar</a>
+                                        <a th:href="@{/flotas/eliminar/{id}(id=${flota.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta flota?')"><i class="bi bi-trash"></i> Eliminar</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para regresar a la página anterior -->
+        <div class="row mt-4">
+            <div class="col text-end">
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Regresar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</body>
+</html>
