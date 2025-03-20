@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulario de Vehículo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div th:replace="fragments/navbar :: nav"></div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 th:text="${vehiculo.id != null} ? 'Editar Vehículo' : 'Crear Nuevo Vehículo'" class="mb-4"></h2>
+                
+                <form th:action="@{(${vehiculo.id} != null) ? '/vehiculos/editar/' + ${vehiculo.id} : '/vehiculos/crear'}" method="post">
+                    <input type="hidden" name="id" th:value="${vehiculo.id}">
+
+                    <div class="mb-3">
+                        <label for="plate" class="form-label">Placa</label>
+                        <input type="text" class="form-control" id="plate" name="plate" th:value="${vehiculo.plate}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="model" name="model" th:value="${vehiculo.model}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Año</label>
+                        <input type="number" class="form-control" id="year" name="year" th:value="${vehiculo.year}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Tipo</label>
+                        <select class="form-control" id="type" name="type" required>
+                            <option value="CARGO" th:selected="${vehiculo.type == 'CARGO'}">Carga</option>
+                            <option value="PASSENGER" th:selected="${vehiculo.type == 'PASSENGER'}">Pasajeros</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="loadCapacityField">
+                        <label for="loadCapacity" class="form-label">Capacidad de Carga (kg)</label>
+                        <input type="number" step="0.1" class="form-control" id="loadCapacity" name="loadCapacity" th:value="${vehiculo.loadCapacity}">
+                    </div>
+
+                    <div class="mb-3" id="passengerCapacityField">
+                        <label for="passengerCapacity" class="form-label">Capacidad de Pasajeros</label>
+                        <input type="number" class="form-control" id="passengerCapacity" name="passengerCapacity" th:value="${vehiculo.passengerCapacity}">
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a th:href="@{/vehiculos}" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function toggleFields() {
+                const type = document.getElementById("type").value;
+                document.getElementById("loadCapacityField").style.display = type === "CARGO" ? "block" : "none";
+                document.getElementById("passengerCapacityField").style.display = type === "PASSENGER" ? "block" : "none";
+            }
+            document.getElementById("type").addEventListener("change", toggleFields);
+            toggleFields();
+        });
+    </script>
+</body>
+</html>
